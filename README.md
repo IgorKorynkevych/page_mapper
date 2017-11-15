@@ -1,2 +1,2 @@
 # page_mapper
-Linux kernel module to map a page of memory
+Linux kernel module which map's a page of memory
