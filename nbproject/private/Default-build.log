@@ -1,0 +1,9 @@
+make -C /lib/modules/4.10.0-1-default/build -lnuma SUBDIRS=/home/page_mapper modules
+make[1]: Entering directory '/home/linux-4.10'
+  CC [M]  /home/page_mapper/page_mapper.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+WARNING: could not open /home/page_mapper/page_mapper.c: Invalid argument
+  CC      /home/page_mapper/page_mapper.mod.o
+  LD [M]  /home/page_mapper/page_mapper.ko
+make[1]: Leaving directory '/home/linux-4.10'
