@@ -22,7 +22,6 @@
 #include <linux/fcntl.h>	
 #include <linux/mm.h>
 
-
 #include "./utils/log.h"
 #include "chardev/chardev.h"
 
@@ -49,8 +48,7 @@ static int mod_init(void)
 	return -1;
     }
     
-    LOG("Module successfully loaded\n");
-    
+    /// create character device
     rc = create_char_device(pm_device);
     if (rc == -1)
     {
@@ -72,6 +70,9 @@ static int mod_init(void)
 static void mod_exit(void)
 {
     destroy_char_device(pm_device);
+    
+    /// free mem
+    kfree(pm_device);
     
     LOG("Module unloaded\n");
 }
