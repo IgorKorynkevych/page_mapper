@@ -22,9 +22,9 @@ struct page_mapper_dev
 {
     struct class *cdev_class; /// needed for udev
     struct device *sysfs_dev; /// sysfs dev
-    struct cdev chardev;	  /// har device structure
+    struct cdev chardev;	  /// char device structure
     u16 major_number; /// major mod number
-    u16 minor_number; /// minor mod number
+    u32 minor_number; /// minor mod number
 };
 
 

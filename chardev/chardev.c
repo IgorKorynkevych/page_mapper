@@ -134,7 +134,7 @@ static int chardev_release(struct inode *inode,
 }
 
 /// char device file operations
-struct file_operations chardev_fops = {
+static struct file_operations chardev_fops = {
     .owner = THIS_MODULE,
     .open = chardev_open,
     .release = chardev_release,
@@ -143,7 +143,7 @@ struct file_operations chardev_fops = {
 
 
 /*
-* @brief  sutup char device
+* @brief  create char device
 *
 * @param  struct page_mapper_dev *pm_dev : main device struct
 *	  u32 major_num : device major num

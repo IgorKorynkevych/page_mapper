@@ -72,7 +72,8 @@ static void mod_exit(void)
     destroy_char_device(pm_device);
     
     /// free mem
-    kfree(pm_device);
+    if (pm_device)
+        kfree(pm_device);
     
     LOG("Module unloaded\n");
 }

@@ -14,12 +14,14 @@
 #ifndef CHARDEV_H
 #define CHARDEV_H
 
+
 #include <linux/fs.h>
 
 #include "../page_mapper.h"
 
 #define MAJOR_NUMBER 0   ///dynamic major by default
 #define DEV_NAME "mem2"  /// name of inode in /dev
+
 
 extern void destroy_char_device(struct page_mapper_dev *pm_dev);
 extern int create_char_device(struct page_mapper_dev *pm_dev);
