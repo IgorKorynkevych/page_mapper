@@ -3,11 +3,16 @@
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
       <df name=".tmp_versions">
-        <in>page_mapper.mod</in>
+        <in>page-mapper.mod</in>
+      </df>
+      <df name="chardev">
+        <in>chardev.c</in>
+        <in>chardev.h</in>
       </df>
       <df name="utils">
         <in>log.h</in>
       </df>
+      <in>page-mapper.mod.c</in>
       <in>page_mapper.c</in>
       <in>page_mapper.h</in>
       <in>page_mapper.mod.c</in>

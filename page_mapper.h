@@ -13,8 +13,19 @@
 #ifndef PAGE_MAPPER_H
 #define PAGE_MAPPER_H
 
+#include <linux/cdev.h>
 
-#define MODULE_NAME "page_mapper"
+#define MODULE_NAME "page-mapper"
+
+/// device main struct
+struct page_mapper_dev
+{
+    struct class *cdev_class; /// needed for udev
+    struct device *sysfs_dev; /// sysfs dev
+    struct cdev chardev;	  /// har device structure
+    u16 major_number; /// major mod number
+    u16 minor_number; /// minor mod number
+};
 
 
 #endif  /* PAGE_MAPPER_H */

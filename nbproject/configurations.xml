@@ -2,9 +2,10 @@
 <configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
-      <df name="utils">
-        <in>log.h</in>
+      <df name="chardev">
+        <in>chardev.c</in>
       </df>
+      <in>page-mapper.mod.c</in>
       <in>page_mapper.c</in>
       <in>page_mapper.mod.c</in>
     </df>
@@ -30,7 +31,7 @@
       </toolsSet>
       <flagsDictionary>
         <element flagsID="0"
-                 commonFlags="-std=gnu89 -m64 -mtune=generic -O2 -fstack-protector -g -march=corei7-avx -O3 -march=corei7-avx -O3"/>
+                 commonFlags="-std=gnu89 -m64 -mtune=generic -O2 -fstack-protector -g -march=native -O2 -march=native -O2"/>
       </flagsDictionary>
       <codeAssistance>
       </codeAssistance>
@@ -70,7 +71,7 @@
               <Elem>CONFIG_AS_SHA256_NI=1</Elem>
               <Elem>CONFIG_AS_SSSE3=1</Elem>
               <Elem>CONFIG_X86_X32_ABI</Elem>
-              <Elem>KBUILD_BASENAME="page_mapper"</Elem>
+              <Elem>KBUILD_BASENAME="page_mapper.mod"</Elem>
               <Elem>KBUILD_MODNAME="page_mapper"</Elem>
               <Elem>MODULE</Elem>
               <Elem>__KERNEL__</Elem>
@@ -82,18 +83,31 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
-      <item path="page_mapper.c" ex="false" tool="0" flavor2="0">
+      <item path="chardev/chardev.c" ex="false" tool="0" flavor2="0">
         <cTool flags="0">
         </cTool>
       </item>
-      <item path="page_mapper.mod.c" ex="false" tool="0" flavor2="0">
+      <folder path="0/chardev">
+        <cTool>
+          <preprocessorList>
+            <Elem>KBUILD_BASENAME="chardev"</Elem>
+          </preprocessorList>
+        </cTool>
+      </folder>
+      <item path="page-mapper.mod.c" ex="false" tool="0" flavor2="0">
+        <cTool flags="0">
+        </cTool>
+      </item>
+      <item path="page_mapper.c" ex="false" tool="0" flavor2="2">
         <cTool flags="0">
           <preprocessorList>
-            <Elem>KBUILD_BASENAME="page_mapper.mod"</Elem>
+            <Elem>KBUILD_BASENAME="page_mapper"</Elem>
           </preprocessorList>
         </cTool>
       </item>
-      <item path="utils/log.h" ex="false" tool="3" flavor2="0">
+      <item path="page_mapper.mod.c" ex="false" tool="0" flavor2="2">
+        <cTool flags="0">
+        </cTool>
       </item>
     </conf>
   </confs>

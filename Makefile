@@ -1,11 +1,13 @@
 #name of compiled module
-TARGET = page_mapper
+TARGET = page-mapper
 
-#add all c sources
-OBJS := page_mapper.o
+#add all target objects
+OBJS := chardev/chardev.o \
+	page_mapper.o
 
-#add all prj source dirs
-SUBDIRS = 
+#add all project source dirs
+SUBDIRS = chardev \
+	  utils
 
 MDIR = drivers/misc
 
@@ -22,7 +24,7 @@ CXXFLAGS="${CFLAGS}
 
 obj-m += $(TARGET).o
 
-stm-objs := $(OBJS)
+page-mapper-objs := $(OBJS)
 
 default:
 	make -C $(KDIR) SUBDIRS=$(PWD) modules
