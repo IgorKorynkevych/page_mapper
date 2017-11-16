@@ -28,6 +28,7 @@
 
 #include "page_mapper.h"
 
+static struct page_mapper_dev *pm_device;
 
 /**
  * @brief Register kernel module. Kernel call's it on insmod
@@ -40,8 +41,8 @@ static int mod_init(void)
     int rc;
     
     /// Allocate memory for main device struct
-    struct page_mapper_dev *pm_dev = kzalloc(sizeof(struct page_mapper_dev), GFP_KERNEL);
-    if (!pm_dev)
+    pm_device = kzalloc(sizeof(struct page_mapper_dev), GFP_KERNEL);
+    if (!pm_device)
     {
 	LOG_ERROR("Error: kzalloc failed. Cant allocate memory\n");
 
@@ -50,7 +51,7 @@ static int mod_init(void)
     
     LOG("Module successfully loaded\n");
     
-    rc = create_char_device(pm_dev);
+    rc = create_char_device(pm_device);
     if (rc == -1)
     {
         LOG_ERROR("Error: create_char_device failed\n");
@@ -70,7 +71,7 @@ static int mod_init(void)
  */
 static void mod_exit(void)
 {
-    //remove_char_device(pm_dev);
+    destroy_char_device(pm_device);
     
     LOG("Module unloaded\n");
 }

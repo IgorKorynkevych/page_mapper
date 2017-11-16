@@ -20,19 +20,19 @@
 
 #define MAJOR_NUMBER 0   ///dynamic major by default
 #define DEV_NAME "mem2"
-
-ssize_t chardev_write(struct file *filp,
+/*
+static ssize_t chardev_write(struct file *filp,
 		    const char __user *buf,
 		    size_t count,
 		    loff_t *f_pos);
 
-ssize_t chardev_read(struct file *filp,
+static ssize_t chardev_read(struct file *filp,
 	char __user *buf,
 	size_t count,
 	loff_t *f_pos);
+*/
 
-
-extern void remove_char_device(struct page_mapper_dev *pm_dev);
+extern void destroy_char_device(struct page_mapper_dev *pm_dev);
 extern int create_char_device(struct page_mapper_dev *pm_dev);
 
 

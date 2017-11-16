@@ -33,32 +33,22 @@ static const struct vm_operations_struct mmap_mem_ops = {
 
 };
 
+/*
+* @brief  this is called, when user process calls mmap
+*
+* @param  struct vm_area_struct *vma : inode file desc
+*         struct file *filp : private data
+*
+* @return 0: success
+*/
 static int mmap_pages(struct file *file, struct vm_area_struct *vma)
 {
     size_t size = vma->vm_end - vma->vm_start;
-    /*
-    if (!valid_mmap_phys_addr_range(vma->vm_pgoff, size))
-            return -EINVAL;
 
-    if (!private_mapping_ok(vma))
-            return -ENOSYS;
-
-    if (!range_is_allowed(vma->vm_pgoff, size))
-            return -EPERM;
-
-    if (!phys_mem_access_prot_allowed(file, vma->vm_pgoff, size,
-                                            &vma->vm_page_prot))
-            return -EINVAL;
-    
-    vma->vm_page_prot = phys_mem_access_prot(file, vma->vm_pgoff,
-                                             size,
-                                             vma->vm_page_prot);
-*/
-    LOG("MMAP called. Start %llu off %llu size %llu perm %llu\n", 
+    LOG("MMAP called. Start 0x%lx off 0x%lx size %lu\n", 
             vma->vm_start, 
             vma->vm_pgoff, 
-            size, 
-            vma->vm_page_prot.pgprot);
+            size);
     
     vma->vm_ops = &mmap_mem_ops;
 
@@ -83,7 +73,7 @@ static int mmap_pages(struct file *file, struct vm_area_struct *vma)
 *
 * @return 0: success
 */
-int chardev_open(struct inode *inode, struct file *filp)
+static int chardev_open(struct inode *inode, struct file *filp)
 {
 
     LOG("Open called \n");
@@ -134,7 +124,7 @@ int chardev_open(struct inode *inode, struct file *filp)
 *
 * @return 0: success
 */
-int chardev_release(struct inode *inode,
+static int chardev_release(struct inode *inode,
 		    struct file *filp)
 {
 
@@ -170,7 +160,7 @@ int chardev_release(struct inode *inode,
 *
 * @return count of read bytes
 */
-ssize_t chardev_write(struct file *filp,
+static ssize_t chardev_write(struct file *filp,
 		    const char __user *buf,
 		    size_t count,
 		    loff_t *f_pos)
@@ -209,7 +199,7 @@ ssize_t chardev_write(struct file *filp,
 *
 * @return count of read bytes
 */
-ssize_t chardev_read(struct file *filp,
+static ssize_t chardev_read(struct file *filp,
 	char __user *buf,
 	size_t count,
 	loff_t *f_pos)
@@ -242,8 +232,8 @@ ssize_t chardev_read(struct file *filp,
 
 struct file_operations chardev_fops = {
 	.owner = THIS_MODULE,
-	.read =	chardev_read,
-	.write = chardev_write,
+	//.read =	chardev_read,
+	//.write = chardev_write,
 	.open =	chardev_open,
 	.release = chardev_release,
         .mmap =	mmap_pages,
@@ -261,11 +251,11 @@ struct file_operations chardev_fops = {
 * @return 1: success
 *	  -1: error
 */
-int setup_char_dev(struct page_mapper_dev *pm_dev, u32 major_num)
+static int setup_char_dev(struct page_mapper_dev *pm_dev, u32 major_num)
 {
     if (!pm_dev)
     {
-	LOG_ERROR("get params error \n");
+	LOG_ERROR("pm_dev struct is NULL \n");
 
 	return -1;
     }
@@ -299,25 +289,26 @@ int setup_char_dev(struct page_mapper_dev *pm_dev, u32 major_num)
 *
 * @return void;
 */
-void remove_char_device(struct page_mapper_dev *pm_dev)
+void destroy_char_device(struct page_mapper_dev *pm_dev)
 {
     if (!pm_dev)
     {
-	LOG_ERROR("get params error \n");
+	LOG_ERROR("pm_dev struct is NULL \n");
 
 	return;
     }
 
-     /// destroy associated class
+    /// destroy associated class
     device_destroy(pm_dev->cdev_class, MKDEV(pm_dev->major_number,
                                             pm_dev->minor_number));
-
     /// destroy char device
     cdev_del(&pm_dev->chardev);
 
     /// Unregister char device region
     unregister_chrdev_region(MKDEV(pm_dev->major_number, 0),
 			    1);
+    /// destroy associated class
+    class_destroy(pm_dev->cdev_class);
 
     LOG("Chardev MAJOR = %d released \n",
 	pm_dev->major_number);
@@ -336,7 +327,7 @@ int create_char_device(struct page_mapper_dev *pm_dev)
 {
     if (!pm_dev)
     {
-	LOG_ERROR("get params error \n");
+	LOG_ERROR("pm_dev struct is NULL \n");
 
 	return -1;
     }
@@ -360,7 +351,7 @@ int create_char_device(struct page_mapper_dev *pm_dev)
 
     if (rc < 0)
     {
-	LOG_ERROR("alloc_chrdev_region error \n");
+	LOG_ERROR("alloc_chrdev_region failed \n");
 
 	return -1;
     }
