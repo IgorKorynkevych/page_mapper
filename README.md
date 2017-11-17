@@ -7,9 +7,9 @@ HowTo Build:
     
     make
 
-Load module:   load_module.sh or insmod page-mapper.sh
+Load module:   load_module.sh or insmod page-mapper.ko
 
-Unload module: unload_module.sh or rmmod page-mapper.sh
+Unload module: unload_module.sh or rmmod page-mapper.ko
 
 Tested on OpenSuse Leap 43.2 kernel 4.10.0
 
