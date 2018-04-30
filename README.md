@@ -3,9 +3,10 @@ Linux kernel module to map memory to the userspace via mmap
 
 HowTo Build: 
 
-    make clean
+    make ddd clean
     
-    make
+    mak11111
+    ddddddd
 
 Load module:   load_module.sh or insmod page-mapper.ko
 
